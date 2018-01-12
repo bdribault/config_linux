@@ -1,9 +1,23 @@
-echo "user.name pour git ?"
+echo -n "git user.name : "
 read NAME
-echo "user.email pour git ?"
+
+echo -n "git user.email : "
 read EMAIL
 
-sudo apt-get install -y git vim tree
+echo -n "graphical env ? [y/n] : "
+read GRAPHICAL
+
+DEFAULT_PACKET_LIST="git vim tree"
+GRAPHIC_PACKET_LIST="meld"
+
+echo "installing default packets"
+
+sudo apt-get install -y ${DEFAULT_PACKET_LIST}
+if [[ "${GRAPHICAL}" == "y" ]]
+then
+    echo "installing graphical packets"
+    sudo apt-get install -y ${GRAPHIC_PACKET_LIST}
+fi
 
 if [[ ! -z ${NAME} ]]
 then
