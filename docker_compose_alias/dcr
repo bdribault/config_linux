@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+set -x
+
+SERVICES=$(docker compose config --services | grep $1)
+docker compose up -d --no-deps --force-recreate $SERVICES

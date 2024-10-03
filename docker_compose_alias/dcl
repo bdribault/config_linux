@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -x
+
+# Joindre tous les arguments avec le caractère '|'
+PATTERN=$(IFS='|'; echo "$*")
+
+SERVICES=$(docker compose config --services | grep -E $PATTERN)
+docker compose logs -f --since 1m $SERVICES
+
+
