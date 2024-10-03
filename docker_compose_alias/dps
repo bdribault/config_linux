@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# sorting : see https://stackoverflow.com/a/49973096/2082935
+# templating : see https://docs.docker.com/engine/reference/commandline/ps/#formatting
+function dps {
+      docker ps -a --format 'table {{ printf "%.15s" .Image }}\t{{ .Names }}\t{{ .Label "com.docker.compose.service" }}\t{{ .RunningFor }}\t{{ .Status }}\t{{ .Ports }}' | \
+      (read -r; printf '%s\n' "$REPLY"; sort -k 1) | \
+      cut -c -$COLUMNS
+}
+export -f dps
+
+# watch with function : https://stackoverflow.com/a/35006244/2082935
+watch -n 0,5 --color -d -x bash -c dps
+# dps

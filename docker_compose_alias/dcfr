@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -x
+
+SERVICES=$(docker compose config --services | grep $1)
+
+docker compose build $SERVICES
+docker compose stop $SERVICES
+docker compose rm --force --volumes $SERVICES
+docker compose up -d --no-deps --force-recreate $SERVICES
+
+
