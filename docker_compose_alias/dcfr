@@ -4,6 +4,12 @@ set -x
 
 SERVICES=$(docker compose config --services | grep $1)
 
+if [ -z "${SERVICES}" ]
+then
+    echo "service not found"
+    exit 1
+fi
+
 docker compose build $SERVICES
 docker compose stop $SERVICES
 docker compose rm --force --volumes $SERVICES
